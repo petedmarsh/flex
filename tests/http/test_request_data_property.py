@@ -2,6 +2,7 @@ import pytest
 import json
 
 from flex.constants import EMPTY
+from flex.exceptions import DataCouldNotBeParsed
 
 from tests.factories import (
     RequestFactory,
@@ -54,4 +55,14 @@ def test_unsupported_content_type():
         content_type='application/unsupported',
     )
     with pytest.raises(NotImplementedError):
+        request.data
+
+
+def test_invalid_json():
+    body = '{"trailing comma not valid": [1,]}'
+    request = RequestFactory(
+        body=body,
+        content_type='application/json',
+    )
+    with pytest.raises(DataCouldNotBeParsed):
         request.data

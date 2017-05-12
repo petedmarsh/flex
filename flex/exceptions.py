@@ -103,3 +103,6 @@ class NoParameterFound(ValueError):
 
 class MultipleParametersFound(ValueError):
     pass
+
+class DataCouldNotBeParsed(ValueError):
+    pass
